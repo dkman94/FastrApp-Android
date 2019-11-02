@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FastrApp</string>
+    <string name="weakness_prompt">Are you experiencing weakness in either of your arms?\nAre you able to lift both of your arms over your head?"</string>
 </resources>
