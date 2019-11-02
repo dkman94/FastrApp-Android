@@ -18,12 +18,11 @@
         android:id="@+id/droop_face_result"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#C1E39B"
+        android:background="@color/defaultAlertColor"
         android:gravity="center"
-        android:text="Test Result: Healthy"
+        android:text="Center your in the view finder and tap the blue button."
         android:textColor="#FFFFFF"
         android:textStyle="bold"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <TextureView
