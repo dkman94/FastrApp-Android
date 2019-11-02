@@ -2,25 +2,36 @@ package app.android.fastrapp
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.util.Log
+import android.util.Rational
 import android.util.Size
 import android.view.*
+import android.widget.Button
+import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.camera.core.CameraX
-import androidx.camera.core.Preview
-import androidx.camera.core.PreviewConfig
+import androidx.camera.core.*
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import com.google.firebase.ml.vision.FirebaseVision
+import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions
+import java.io.File
 
 private const val REQUEST_CODE_PERMISSIONS = 10
-private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
+private val REQUIRED_PERMISSIONS =
+    arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
 class SmileTestFragment : Fragment() {
 
     lateinit var viewFinder: TextureView
+    lateinit var takePicture: Button
+    val currentImageName = "image_name_1.jpg"
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreateView(
@@ -31,6 +42,7 @@ class SmileTestFragment : Fragment() {
         val view = inflater.inflate(R.layout.smile_tests_page_fragment, container, false)
 
         viewFinder = view.findViewById<TextureView>(R.id.view_finder)
+        takePicture = view.findViewById<Button>(R.id.take_picture_button)
         viewFinder.post {
             if (allPermissionsGranted()) {
                 viewFinder.post { startCamera() }
@@ -39,16 +51,10 @@ class SmileTestFragment : Fragment() {
                 println("here")
             }
         }
+
         viewFinder.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
             updateTransform(viewFinder)
         }
-
-        val options = FirebaseVisionFaceDetectorOptions.Builder().apply {
-            setPerformanceMode(FirebaseVisionFaceDetectorOptions.ACCURATE)
-            setLandmarkMode(FirebaseVisionFaceDetectorOptions.ALL_LANDMARKS)
-            setMinFaceSize(.15f)
-        }
-
 
         return view
     }
@@ -61,6 +67,7 @@ class SmileTestFragment : Fragment() {
             setTargetResolution(Size(640, 480))
             setLensFacing(CameraX.LensFacing.FRONT)
         }.build()
+        val imageCapture = setupImageCapture()
 
 
         // Build the viewfinder use case
@@ -78,8 +85,7 @@ class SmileTestFragment : Fragment() {
             updateTransform(viewFinder)
         }
 
-        CameraX.bindToLifecycle(this, preview)
-
+        CameraX.bindToLifecycle(this, preview, imageCapture)
     }
 
     @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -102,6 +108,79 @@ class SmileTestFragment : Fragment() {
 
         // Finally, apply transformations to our TextureView
         viewFinder.setTransform(matrix)
+    }
+
+    private fun setupImageCapture(): ImageCapture {
+
+        val imageCaptureConfig = ImageCaptureConfig.Builder()
+            .apply {
+                setTargetAspectRatio(Rational(1, 1))
+                // Sets the capture mode to prioritise over high quality images
+                // or lower latency capturing
+                setCaptureMode(ImageCapture.CaptureMode.MAX_QUALITY)
+                setLensFacing(CameraX.LensFacing.FRONT)
+            }.build()
+
+        val imageCapture = ImageCapture(imageCaptureConfig)
+
+        // Set a click listener on the capture Button to capture the image
+        takePicture.setOnClickListener {
+            // Create the image file
+//            val file = File(
+//                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+//                "${System.currentTimeMillis()}_CameraXPlayground.jpg"
+//            )
+            // Call the takePicture() method on the ImageCapture object
+            val file = File(
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                currentImageName
+            )
+            imageCapture.takePicture(file,
+                                     object : ImageCapture.OnImageSavedListener {
+                                         override fun onError(
+                                             imageCaptureError: ImageCapture.ImageCaptureError,
+                                             message: String,
+                                             cause: Throwable?
+                                         ) {
+                                             val msg = "Photo capture failed: $message"
+                                             Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                                             Log.e("CameraXApp", msg)
+                                         }
+
+                                         // If the image capture is successful
+                                         override fun onImageSaved(file: File) {
+                                             val msg =
+                                                 "Photo capture succeeded: ${file.absolutePath}"
+                                             Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                                             Log.d("CameraXApp", msg)
+                                             getUserPictureAndAnalyze(file)
+                                         }
+                                     })
+        }
+
+        return imageCapture
+    }
+
+    private fun getUserPictureAndAnalyze(file: File) {
+        val fileAsBitmap = BitmapFactory.decodeFile(file.name)
+        val options = FirebaseVisionFaceDetectorOptions.Builder().apply {
+            setPerformanceMode(FirebaseVisionFaceDetectorOptions.ACCURATE)
+            setLandmarkMode(FirebaseVisionFaceDetectorOptions.ALL_LANDMARKS)
+            setMinFaceSize(.15f)
+        }.build()
+        val image = FirebaseVisionImage.fromFilePath(context!!, file.toUri())
+        val detector = FirebaseVision.getInstance().getVisionFaceDetector(options)
+        val result = detector.detectInImage(image)
+            .addOnSuccessListener {
+                println("analyzed image")
+                it.forEach { firebaseVisionFace ->
+                    println("smile - " + firebaseVisionFace.smilingProbability)
+                }
+            }
+            .addOnFailureListener {
+                println("failed to analyzed image")
+            }
+
     }
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
