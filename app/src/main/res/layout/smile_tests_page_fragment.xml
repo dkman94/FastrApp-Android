@@ -4,14 +4,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/text_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Smile test"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <Button
+        android:id="@+id/take_picture_button"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="70dp"
+        android:background="@drawable/rounded_button"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_finder" />
+
+    <TextView
+        android:id="@+id/droop_face_result"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#C1E39B"
+        android:gravity="center"
+        android:text="Test Result: Healthy"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextureView
+        android:id="@+id/view_finder"
+        android:layout_width="300dp"
+        android:layout_height="390dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

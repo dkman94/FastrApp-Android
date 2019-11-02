@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">FastrApp</string>
+    <string name="droop_test_pass">Healthy, no droop detected.</string>
+    <string name="droop_test_fail">Droop detected, please seek medical help and continue.</string>
+    <string name="no_faces_found">No faces found, please try again.</string>
+    <string name="weakness_prompt">Are you experiencing weakness in either of your arms?\nAre you able to lift both of your arms over your head?"</string>
 </resources>
