@@ -13,20 +13,10 @@ import androidx.core.content.ContextCompat
 import java.io.IOException
 import android.speech.RecognizerIntent
 import android.content.Intent
-//import sun.jvm.hotspot.utilities.IntArray
 import android.widget.Toast
-//import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import android.content.ActivityNotFoundException
-import android.content.Context
 import android.util.Log
-//import sun.jvm.hotspot.utilities.IntArray
-//import androidx.test.core.app.ApplicationProvider.getApplicationContext
-//import sun.jvm.hotspot.utilities.IntArray
 import java.util.*
-//import sun.jvm.hotspot.utilities.IntArray
-
-
-
 
 class SpeakTestFragment : Fragment() {
     lateinit var helper:UserPrefsHelper
@@ -74,12 +64,6 @@ class SpeakTestFragment : Fragment() {
                 startRecording(intent)
             }
         }
-
-//        toggleRecordingButton.setOnHoverListener {
-//            toggleRecordingButton.setBackgroundColor(
-//                ContextCompat.getColor(this, R.color.colorLightBlue2)
-//            )
-//        }
 
         return view
     }
