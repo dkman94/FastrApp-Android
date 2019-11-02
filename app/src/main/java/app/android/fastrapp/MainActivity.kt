@@ -10,6 +10,7 @@ import androidx.viewpager.widget.ViewPager
 class MainActivity : FragmentActivity() {
 
     private lateinit var mPager: ViewPager
+    private lateinit var userPrefsHelper:UserPrefsHelper;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,6 +19,7 @@ class MainActivity : FragmentActivity() {
         mPager = findViewById(R.id.pager)
         val pagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
         mPager.adapter = pagerAdapter
+        userPrefsHelper = UserPrefsHelper(this)
     }
 
     override fun onBackPressed() {
