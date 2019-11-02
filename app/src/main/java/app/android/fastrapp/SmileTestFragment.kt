@@ -59,6 +59,7 @@ class SmileTestFragment : Fragment() {
         // Create configuration object for the viewfinder use case
         val previewConfig = PreviewConfig.Builder().apply {
             setTargetResolution(Size(640, 480))
+            setLensFacing(CameraX.LensFacing.FRONT)
         }.build()
 
 
