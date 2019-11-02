@@ -7,6 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 
 class ResultsFragment : Fragment() {
+    lateinit var helper:UserPrefsHelper;
+
+    fun initialize(helper: UserPrefsHelper){
+        this.helper = helper
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

@@ -10,6 +10,7 @@ import androidx.viewpager.widget.ViewPager
 class MainActivity : FragmentActivity() {
 
     private lateinit var mPager: ViewPager
+    private lateinit var userPrefsHelper:UserPrefsHelper;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,6 +19,8 @@ class MainActivity : FragmentActivity() {
         mPager = findViewById(R.id.pager)
         val pagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
         mPager.adapter = pagerAdapter
+        userPrefsHelper = UserPrefsHelper(this)
+        userPrefsHelper.CreateNewEntry()
     }
 
     override fun onBackPressed() {
@@ -37,11 +40,11 @@ class MainActivity : FragmentActivity() {
         override fun getCount(): Int = 5
 
         override fun getItem(position: Int): Fragment = when (position) {
-            0 -> SmileTestFragment()
-            1 -> ArmsTestFragment()
-            2 -> SpeakTestFragment()
-            3 -> EmergencyContactFragment()
-            4 -> ResultsFragment()
+            0 -> SmileTestFragment().apply { initialize(userPrefsHelper) }
+            1 -> ArmsTestFragment().apply { initialize(userPrefsHelper) }
+            2 -> SpeakTestFragment().apply { initialize(userPrefsHelper) }
+            3 -> EmergencyContactFragment().apply { initialize(userPrefsHelper) }
+            4 -> ResultsFragment().apply { initialize(userPrefsHelper) }
 
             else -> ResultsFragment()
         }
