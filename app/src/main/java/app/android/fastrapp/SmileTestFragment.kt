@@ -2,7 +2,6 @@ package app.android.fastrapp
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.os.Build
 import android.os.Bundle
@@ -20,12 +19,16 @@ import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
+import com.google.firebase.ml.vision.face.FirebaseVisionFace
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions
+import com.google.firebase.ml.vision.face.FirebaseVisionFaceLandmark
 import java.io.File
+import kotlin.math.abs
 
 private const val REQUEST_CODE_PERMISSIONS = 10
 private val REQUIRED_PERMISSIONS =
     arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+private val MIN_DROOPY_MOUTH_THRESHOLD_DIFF = 0.16
 
 class SmileTestFragment : Fragment() {
 
@@ -64,7 +67,7 @@ class SmileTestFragment : Fragment() {
 
         // Create configuration object for the viewfinder use case
         val previewConfig = PreviewConfig.Builder().apply {
-            setTargetResolution(Size(640, 480))
+            setTargetResolution(Size(800, 1000))
             setLensFacing(CameraX.LensFacing.FRONT)
         }.build()
         val imageCapture = setupImageCapture()
@@ -133,7 +136,7 @@ class SmileTestFragment : Fragment() {
             // Call the takePicture() method on the ImageCapture object
             val file = File(
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                currentImageName
+                "${System.currentTimeMillis()}_CameraXPlayground.jpg"
             )
             imageCapture.takePicture(file,
                                      object : ImageCapture.OnImageSavedListener {
@@ -143,7 +146,6 @@ class SmileTestFragment : Fragment() {
                                              cause: Throwable?
                                          ) {
                                              val msg = "Photo capture failed: $message"
-                                             Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
                                              Log.e("CameraXApp", msg)
                                          }
 
@@ -151,7 +153,6 @@ class SmileTestFragment : Fragment() {
                                          override fun onImageSaved(file: File) {
                                              val msg =
                                                  "Photo capture succeeded: ${file.absolutePath}"
-                                             Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
                                              Log.d("CameraXApp", msg)
                                              getUserPictureAndAnalyze(file)
                                          }
@@ -162,7 +163,6 @@ class SmileTestFragment : Fragment() {
     }
 
     private fun getUserPictureAndAnalyze(file: File) {
-        val fileAsBitmap = BitmapFactory.decodeFile(file.name)
         val options = FirebaseVisionFaceDetectorOptions.Builder().apply {
             setPerformanceMode(FirebaseVisionFaceDetectorOptions.ACCURATE)
             setLandmarkMode(FirebaseVisionFaceDetectorOptions.ALL_LANDMARKS)
@@ -173,14 +173,27 @@ class SmileTestFragment : Fragment() {
         val result = detector.detectInImage(image)
             .addOnSuccessListener {
                 println("analyzed image")
-                it.forEach { firebaseVisionFace ->
-                    println("smile - " + firebaseVisionFace.smilingProbability)
-                }
+                val detectedFaceDroop = hasDetectedFaceDroop(it.first()).toString()
+                Toast.makeText(context, "face droop - " + detectedFaceDroop, Toast.LENGTH_SHORT)
+                    .show()
             }
             .addOnFailureListener {
                 println("failed to analyzed image")
             }
+    }
 
+    private fun hasDetectedFaceDroop(face: FirebaseVisionFace): Boolean {
+        val leftLip = face.getLandmark(FirebaseVisionFaceLandmark.MOUTH_LEFT)!!.position
+        val rightLip = face.getLandmark(FirebaseVisionFaceLandmark.MOUTH_RIGHT)!!.position
+        val mouthMiddleBottom = face.getLandmark(FirebaseVisionFaceLandmark.MOUTH_BOTTOM)!!.position
+
+        val leftLipToMiddle =
+            abs((leftLip.y - mouthMiddleBottom.y) / (leftLip.x - mouthMiddleBottom.x))
+        val rightLipToMiddle =
+            abs((rightLip.y - mouthMiddleBottom.y) / (rightLip.x - mouthMiddleBottom.x))
+        val diff = abs(leftLipToMiddle - rightLipToMiddle)
+        Log.d("threshold ", diff.toString())
+        return diff > MIN_DROOPY_MOUTH_THRESHOLD_DIFF
     }
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
