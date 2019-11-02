@@ -142,6 +142,8 @@ class SmileTestFragment : Fragment() {
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
                 "${System.currentTimeMillis()}_CameraXPlayground.jpg"
             )
+            testResult.setText(R.string.analyzing_face)
+            testResult.setBackgroundColor(context!!.resources.getColor(R.color.defaultAlertColor))
             imageCapture.takePicture(file,
                                      object : ImageCapture.OnImageSavedListener {
                                          override fun onError(
