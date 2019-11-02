@@ -5,4 +5,7 @@
     <color name="colorAccent">#D81B60</color>
     <color name="failedTestAlert">#D5E32A45</color>
     <color name="healthyTestAlert">#B036E32A</color>
+<!--    <color name="colorLightBlueDuolingo">#14d4f4</color>-->
+    <color name="colorLightBlue2">#64b5f6 </color>
+    <color name="colorBlue">#2196f3 </color>
 </resources>
