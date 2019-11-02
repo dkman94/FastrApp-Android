@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Compiled class file
 *.class
 
@@ -23,6 +24,18 @@
 hs_err_pid*
 
 # https://github.com/JetBrains/kotlin/blob/master/.gitignore
+=======
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+/.idea
+>>>>>>> 979beb0bec4e773bdec64a5faf93576a7321ff91
 .DS_Store
 .idea/shelf
 /android.tests.dependencies
