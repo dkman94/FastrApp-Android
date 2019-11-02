@@ -37,9 +37,8 @@ class SmileTestFragment : Fragment() {
     lateinit var takePicture: Button
     var viewFinderWidth = 0
     var viewFinderHeight = 0
-    val currentImageName = "image_name_1.jpg"
+    lateinit var helper: UserPrefsHelper;
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -66,6 +65,10 @@ class SmileTestFragment : Fragment() {
         }
 
         return view
+    }
+
+    fun initialize(helper: UserPrefsHelper) {
+        this.helper = helper
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -213,4 +216,5 @@ class SmileTestFragment : Fragment() {
             context!!, it
         ) == PackageManager.PERMISSION_GRANTED
     }
+
 }
