@@ -11,7 +11,7 @@ import android.util.Rational
 import android.util.Size
 import android.view.*
 import android.widget.Button
-import android.widget.Toast
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.camera.core.*
 import androidx.core.content.ContextCompat
@@ -32,8 +32,11 @@ private val MIN_DROOPY_MOUTH_THRESHOLD_DIFF = 0.16
 
 class SmileTestFragment : Fragment() {
 
+    lateinit var testResult: TextView
     lateinit var viewFinder: TextureView
     lateinit var takePicture: Button
+    var viewFinderWidth = 0
+    var viewFinderHeight = 0
     val currentImageName = "image_name_1.jpg"
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -42,10 +45,13 @@ class SmileTestFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        viewFinderWidth = (context!!.resources.displayMetrics.density * 300).toInt()
+        viewFinderHeight = (context!!.resources.displayMetrics.density * 500).toInt()
         val view = inflater.inflate(R.layout.smile_tests_page_fragment, container, false)
 
         viewFinder = view.findViewById<TextureView>(R.id.view_finder)
         takePicture = view.findViewById<Button>(R.id.take_picture_button)
+        testResult = view.findViewById<TextView>(R.id.droop_face_result)
         viewFinder.post {
             if (allPermissionsGranted()) {
                 viewFinder.post { startCamera() }
@@ -67,7 +73,7 @@ class SmileTestFragment : Fragment() {
 
         // Create configuration object for the viewfinder use case
         val previewConfig = PreviewConfig.Builder().apply {
-            setTargetResolution(Size(800, 1000))
+            setTargetResolution(Size(viewFinderWidth, viewFinderHeight))
             setLensFacing(CameraX.LensFacing.FRONT)
         }.build()
         val imageCapture = setupImageCapture()
@@ -129,11 +135,6 @@ class SmileTestFragment : Fragment() {
         // Set a click listener on the capture Button to capture the image
         takePicture.setOnClickListener {
             // Create the image file
-//            val file = File(
-//                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-//                "${System.currentTimeMillis()}_CameraXPlayground.jpg"
-//            )
-            // Call the takePicture() method on the ImageCapture object
             val file = File(
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
                 "${System.currentTimeMillis()}_CameraXPlayground.jpg"
@@ -173,9 +174,20 @@ class SmileTestFragment : Fragment() {
         val result = detector.detectInImage(image)
             .addOnSuccessListener {
                 println("analyzed image")
-                val detectedFaceDroop = hasDetectedFaceDroop(it.first()).toString()
-                Toast.makeText(context, "face droop - " + detectedFaceDroop, Toast.LENGTH_SHORT)
-                    .show()
+                testResult.visibility = View.VISIBLE
+                if (it.isEmpty()) {
+                    testResult.setText(R.string.no_faces_found)
+                    testResult.setBackgroundColor(context!!.resources.getColor(R.color.failedTestAlert))
+                } else {
+                    val detectedFaceDroop = hasDetectedFaceDroop(it.first())
+                    if (detectedFaceDroop) {
+                        testResult.setText(R.string.droop_test_fail)
+                        testResult.setBackgroundColor(context!!.resources.getColor(R.color.failedTestAlert))
+                    } else {
+                        testResult.setText(R.string.droop_test_pass)
+                        testResult.setBackgroundColor(context!!.resources.getColor(R.color.healthyTestAlert))
+                    }
+                }
             }
             .addOnFailureListener {
                 println("failed to analyzed image")
