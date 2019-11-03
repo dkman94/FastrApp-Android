@@ -42,6 +42,8 @@ class ArmsTestFragment : Fragment() {
             helper.UpdateActivity(UserPrefsHelper.TestType.ARM, true)
             armsResult.setText(R.string.arms_weakness)
             armsResult.setBackgroundColor(context!!.resources.getColor(R.color.failedTestAlert))
+            val emergencyServicesAlert = CallEmergencyServicesAlert()
+            emergencyServicesAlert.show(fragmentManager!!, "emergencyAlert")
             rightChevron.visibility = View.INVISIBLE
         }
 
