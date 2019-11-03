@@ -5,5 +5,5 @@
     <string name="no_faces_found">No faces found, please try again.</string>
     <string name="weakness_prompt">Are you experiencing weakness in either of your arms?\nAre you able to lift both of your arms over your head?"</string>
     <string name="mic_button_description">microphone button (not displaying)</string>
-    <string name="fail">Fail try again</string>
+    <string name="speech_test_case">alex caruso is the greatest basketball player</string>
 </resources>
