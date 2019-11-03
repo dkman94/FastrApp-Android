@@ -98,7 +98,7 @@ class SpeakTestFragment : Fragment() {
                 if (data != null) {
                     val result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
                     val testCase = getString(R.string.speech_test_case).split(" ").toTypedArray()
-                    var speechErrorDetected = false
+                    var speechErrorDetected = true
                     for (r in result) {
                         val wsa = WordSequenceAligner()
                         val arrayResult = r.split(" ").toTypedArray()
@@ -109,7 +109,7 @@ class SpeakTestFragment : Fragment() {
                         Log.d("wer", wer.toString())
 
                         if (wer < WER_THRESHOLD) {
-                            speechErrorDetected = true
+                            speechErrorDetected = false
                             break
                         }
                     }

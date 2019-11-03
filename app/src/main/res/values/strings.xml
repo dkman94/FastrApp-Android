@@ -5,7 +5,7 @@
     <string name="speak_test_pass">No slurred speech detected. Please swipe to continue.</string>
     <string name="speak_test_fail">Slurred speech detected, please seek medical help and continue.</string>
     <string name="no_faces_found">No faces found, please try again.</string>
-    <string name="speech_test_case">the sky is blue</string>
+    <string name="speech_test_case">The sky is blue</string>
     <string name="weakness_prompt">Are you experiencing weakness in either of your arms?\nAre you unable to lift either of your arms over your head?"</string>
     <string name="analyzing_face">Detecting facial features…</string>
 </resources>
