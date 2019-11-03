@@ -62,6 +62,8 @@ class SmileTestFragment : Fragment() {
         takePicture = view.findViewById<Button>(R.id.take_picture_button)
         testResult = view.findViewById<TextView>(R.id.droop_face_result)
         rightChevron = view.findViewById<ImageView>(R.id.right_chevron)
+        rightChevron.visibility = View.INVISIBLE
+
         viewFinder.post {
             if (allPermissionsGranted()) {
                 startCamera()
@@ -199,6 +201,7 @@ class SmileTestFragment : Fragment() {
                         testResult.setText(R.string.droop_test_fail)
                         testResult.setBackgroundColor(context!!.resources.getColor(R.color.failedTestAlert))
                         helper.UpdateActivity(UserPrefsHelper.TestType.FACE, true)
+                        rightChevron.visibility = View.INVISIBLE
                     } else {
                         testResult.setText(R.string.droop_test_pass)
                         testResult.setBackgroundColor(context!!.resources.getColor(R.color.healthyTestAlert))

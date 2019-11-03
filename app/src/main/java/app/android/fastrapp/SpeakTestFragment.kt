@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -21,6 +22,7 @@ import java.util.*
 class SpeakTestFragment : Fragment() {
     lateinit var helper: UserPrefsHelper
     lateinit var testResult: TextView
+    lateinit var rightChevron: ImageView
 
     fun initialize(helper: UserPrefsHelper) {
         this.helper = helper
@@ -36,6 +38,8 @@ class SpeakTestFragment : Fragment() {
     ): View {
         val view = inflater.inflate(R.layout.speak_test_page_fragment, container, false)
         testResult = view.findViewById<TextView>(R.id.speak_test_result)
+        rightChevron = view.findViewById<ImageView>(R.id.right_chevron)
+        rightChevron.visibility = View.INVISIBLE
 
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
         intent.putExtra(
@@ -86,10 +90,12 @@ class SpeakTestFragment : Fragment() {
             testResult.setText(R.string.speak_test_fail)
             testResult.setBackgroundColor(context!!.resources.getColor(R.color.failedTestAlert))
             helper.UpdateActivity(UserPrefsHelper.TestType.SPEECH, false)
+            rightChevron.visibility = View.INVISIBLE
         } else {
             testResult.setText(R.string.speak_test_pass)
             testResult.setBackgroundColor(context!!.resources.getColor(R.color.healthyTestAlert))
             helper.UpdateActivity(UserPrefsHelper.TestType.SPEECH, true)
+            rightChevron.visibility = View.VISIBLE
         }
     }
 

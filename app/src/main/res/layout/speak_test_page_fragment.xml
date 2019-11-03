@@ -9,7 +9,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Please repeat the following sentence after pressing the microphone:"
-        android:textColor="#000"
         android:textSize="32dp"
         android:textStyle="normal"
         android:paddingLeft="16dp"
@@ -36,6 +35,17 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/speech_header"
         app:layout_constraintVertical_bias="0.208" />
+
+    <ImageView
+        android:id="@+id/right_chevron"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginRight="25dp"
+        android:src="@drawable/baseline_chevron_right_black_18dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/mic_button"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/mic_button" />
 
     <ImageButton
         android:id="@+id/mic_button"
