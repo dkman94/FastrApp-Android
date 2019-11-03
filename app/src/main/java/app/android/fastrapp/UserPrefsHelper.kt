@@ -12,10 +12,15 @@ class UserPrefsHelper(context: Context) {
     var currentSessionIdLabel= "currentSessionId"
     class TestSession(){
         var id:Int=-1
-        var face:Boolean = false
-        var arms:Boolean = false
-        var speech:Boolean = false
+        var hasFaceWeakness:Boolean = false
+        var hasArmsWeakness:Boolean = false
+        var hasSpeechSlur:Boolean = false
         var baseline:Boolean=false
+
+        var hasCheckedFace:Boolean = false
+        var hasCheckedArms:Boolean = false
+        var hasCheckedSpeech = false
+
         var timeOfTest:String
         init{
             val sdf = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault())
@@ -45,13 +50,16 @@ class UserPrefsHelper(context: Context) {
 
     fun UpdateActivity(test:TestType, result:Boolean){
         if (test == TestType.ARM){
-            this.currentTestSession.arms = result
+            this.currentTestSession.hasArmsWeakness = result
+            this.currentTestSession.hasCheckedArms = true
         }
         else if (test == TestType.FACE){
-            this.currentTestSession.face = result
+            this.currentTestSession.hasFaceWeakness = result
+            this.currentTestSession.hasCheckedFace = true
         }
         else if (test == TestType.SPEECH){
-            this.currentTestSession.speech = result
+            this.currentTestSession.hasSpeechSlur = result
+            this.currentTestSession.hasCheckedSpeech = true
         }
     }
 

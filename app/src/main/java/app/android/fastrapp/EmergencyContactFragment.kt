@@ -6,10 +6,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.core.content.ContextCompat.startActivity
 import android.content.Intent
 import android.net.Uri
 import android.telephony.SmsManager
@@ -57,25 +55,37 @@ class EmergencyContactFragment : Fragment() {
         val results = helper.currentTestSession
         var failedFAST:Boolean = false
         val allClearBtn = view.findViewById<TextView>(R.id.all_clear)
+        val armsRes = view.findViewById<TextView>(R.id.arm_results_val)
+        val faceRes = view.findViewById<TextView>(R.id.face_results_val)
+        val speechRes = view.findViewById<TextView>(R.id.arm_results_val)
 
-        if(results.arms == true){
-            val armsRes = view.findViewById<TextView>(R.id.arm_results_val)
+        if(results.hasArmsWeakness == true){
             armsRes.setText("Fail")
             armsRes.setTextColor(Color.RED)
             failedFAST = true
         }
-        if(results.face == true){
-            val armsRes = view.findViewById<TextView>(R.id.face_results_val);
-            armsRes.setText("Fail")
-            armsRes.setTextColor(Color.RED)
+        else if(results.hasCheckedArms == true){
+            armsRes.setText("Pass")
+            armsRes.setTextColor(Color.GREEN)
+        }
+        if(results.hasFaceWeakness == true){
+            faceRes.setText("Fail")
+            faceRes.setTextColor(Color.RED)
             failedFAST = true
 
         }
-        if(results.speech == true){
-            val armsRes = view.findViewById<TextView>(R.id.arm_results_val);
-            armsRes.setText("Fail")
-            armsRes.setTextColor(Color.RED)
+        else if(results.hasCheckedFace == true){
+            faceRes.setText("Pass")
+            faceRes.setTextColor(Color.GREEN)
+        }
+        if(results.hasSpeechSlur == true){
+            speechRes.setText("Fail")
+            speechRes.setTextColor(Color.RED)
             failedFAST = true
+        }
+        else if(results.hasCheckedSpeech == true){
+            speechRes.setText("Pass")
+            speechRes.setTextColor(Color.GREEN)
         }
         if (failedFAST == true){
             val summaryTextView = view.findViewById<TextView>(R.id.summary_message)
