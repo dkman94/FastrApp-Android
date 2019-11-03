@@ -37,16 +37,15 @@ class MainActivity : FragmentActivity() {
 
     private inner class ScreenSlidePagerAdapter(fm: FragmentManager) :
         FragmentStatePagerAdapter(fm) {
-        override fun getCount(): Int = 5
+        override fun getCount(): Int = 4
 
         override fun getItem(position: Int): Fragment = when (position) {
             0 -> SmileTestFragment().apply { initialize(userPrefsHelper) }
             1 -> ArmsTestFragment().apply { initialize(userPrefsHelper) }
             2 -> SpeakTestFragment().apply { initialize(userPrefsHelper) }
             3 -> EmergencyContactFragment().apply { initialize(userPrefsHelper) }
-            4 -> ResultsFragment().apply { initialize(userPrefsHelper) }
 
-            else -> ResultsFragment()
+            else -> EmergencyContactFragment()
         }
     }
 }
