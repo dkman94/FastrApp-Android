@@ -85,9 +85,11 @@ class SpeakTestFragment : Fragment() {
         if (speechErrorDetected) {
             testResult.setText(R.string.speak_test_fail)
             testResult.setBackgroundColor(context!!.resources.getColor(R.color.failedTestAlert))
+            helper.UpdateActivity(UserPrefsHelper.TestType.SPEECH, false)
         } else {
             testResult.setText(R.string.speak_test_pass)
             testResult.setBackgroundColor(context!!.resources.getColor(R.color.healthyTestAlert))
+            helper.UpdateActivity(UserPrefsHelper.TestType.SPEECH, true)
         }
     }
 
