@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">FastrApp</string>
-    <string name="droop_test_pass">Everything looks good. Swipe left, and move on to the next test.</string>
-    <string name="droop_test_fail">Droop detected. Please seek medical help.</string>
-    <string name="speak_test_pass">No slurred speech detected. Swipe left to see final results.</string>
-    <string name="speak_test_fail">Slurred speech detected. Please seek medical help.</string>
-    <string name="arm_test_pass">No arm weakness indicated. Swipe left, and move on to the next test.</string>
-    <string name="arm_test_fail">Arm weakness detected. Please seek medical help.</string>
+    <string name="droop_test_pass">Everything looks good. Please swipe to continue.</string>
+    <string name="droop_test_fail">Droop detected, please seek medical help and continue.</string>
+    <string name="speak_test_pass">No slurred speech detected. Please swipe to continue.</string>
+    <string name="speak_test_fail">Slurred speech detected, please seek medical help and continue.</string>
+    <string name="arms_weakness">Arm weakness detected. Please seek medical help and continue.</string>
+    <string name="no_arm_weakness">No arm weakness. Please swipe to continue.</string>
     <string name="no_faces_found">No faces found, please try again.</string>
     <string name="weakness_prompt">Please lift your arms as shown below. Are you able to hold your arms up for 10 seconds evenly?"</string>
     <string name="speech_test_case">The sky is blue</string>
