@@ -10,7 +10,7 @@ import androidx.viewpager.widget.ViewPager
 class MainActivity : FragmentActivity() {
 
     private lateinit var mPager: ViewPager
-    private lateinit var userPrefsHelper:UserPrefsHelper;
+    private lateinit var userPrefsHelper: UserPrefsHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +33,6 @@ class MainActivity : FragmentActivity() {
             mPager.currentItem = mPager.currentItem - 1
         }
     }
-
 
     private inner class ScreenSlidePagerAdapter(fm: FragmentManager) :
         FragmentStatePagerAdapter(fm) {

@@ -9,7 +9,7 @@ all: help
 .PHONY: format
 ## Format kotlin code
 format:
-	@ktlint -F "src/**/*.kt"
+	@ktlint -F "app/src/**/*.kt"
 
 .PHONY: check-format
 ## Print a diff of formatting changes required for any code change

@@ -29,7 +29,7 @@ class ArmsTestFragment : Fragment() {
         rightChevron = view.findViewById<ImageView>(R.id.right_chevron)
         rightChevron.visibility = View.INVISIBLE
 
-        yesBtn = view.findViewById<TextView>(R.id.yes_weakness);
+        yesBtn = view.findViewById<TextView>(R.id.yes_weakness)
         yesBtn.setOnClickListener {
             helper.UpdateActivity(UserPrefsHelper.TestType.ARM, false)
             armsResult.setText(R.string.no_arm_weakness)
@@ -37,7 +37,7 @@ class ArmsTestFragment : Fragment() {
             rightChevron.visibility = View.VISIBLE
         }
 
-        noBtn = view.findViewById<TextView>(R.id.no_weakness);
+        noBtn = view.findViewById<TextView>(R.id.no_weakness)
         noBtn.setOnClickListener {
             helper.UpdateActivity(UserPrefsHelper.TestType.ARM, true)
             armsResult.setText(R.string.arms_weakness)
