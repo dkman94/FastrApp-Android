@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">FastrApp</string>
-    <string name="droop_test_pass">Healthy, no droop detected.</string>
+    <string name="droop_test_pass">Everything looks good. Swipe left, and move on to the next test.</string>
     <string name="droop_test_fail">Droop detected, please seek medical help and continue.</string>
     <string name="no_faces_found">No faces found, please try again.</string>
     <string name="speech_test_case">alex caruso is the greatest basketball player</string>

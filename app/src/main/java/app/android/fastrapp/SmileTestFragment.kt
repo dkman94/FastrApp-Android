@@ -11,6 +11,7 @@ import android.util.Rational
 import android.util.Size
 import android.view.*
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.camera.core.*
@@ -35,13 +36,14 @@ private val REQUIRED_PERMISSIONS =
         Manifest.permission.SEND_SMS
     )
 
-private val MIN_DROOPY_MOUTH_THRESHOLD_DIFF = 0.16
+private val MIN_DROOPY_MOUTH_THRESHOLD_DIFF = 0.25
 
 class SmileTestFragment : Fragment() {
 
     lateinit var testResult: TextView
     lateinit var viewFinder: TextureView
     lateinit var takePicture: Button
+    lateinit var rightChevron: ImageView
     var viewFinderWidth = 0
     var viewFinderHeight = 0
     lateinit var helper: UserPrefsHelper;
@@ -51,13 +53,14 @@ class SmileTestFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewFinderWidth = (context!!.resources.displayMetrics.density * 300).toInt()
-        viewFinderHeight = (context!!.resources.displayMetrics.density * 500).toInt()
+        viewFinderWidth = (context!!.resources.displayMetrics.density * 410).toInt()
+        viewFinderHeight = (context!!.resources.displayMetrics.density * 533).toInt()
         val view = inflater.inflate(R.layout.smile_tests_page_fragment, container, false)
 
         viewFinder = view.findViewById<TextureView>(R.id.view_finder)
         takePicture = view.findViewById<Button>(R.id.take_picture_button)
         testResult = view.findViewById<TextView>(R.id.droop_face_result)
+        rightChevron = view.findViewById<ImageView>(R.id.right_chevron)
         viewFinder.post {
             if (allPermissionsGranted()) {
                 startCamera()
@@ -194,9 +197,12 @@ class SmileTestFragment : Fragment() {
                     if (detectedFaceDroop) {
                         testResult.setText(R.string.droop_test_fail)
                         testResult.setBackgroundColor(context!!.resources.getColor(R.color.failedTestAlert))
+                        helper.UpdateActivity(UserPrefsHelper.TestType.FACE, false)
                     } else {
                         testResult.setText(R.string.droop_test_pass)
                         testResult.setBackgroundColor(context!!.resources.getColor(R.color.healthyTestAlert))
+                        helper.UpdateActivity(UserPrefsHelper.TestType.FACE, true)
+                        rightChevron.visibility = View.VISIBLE
                     }
                 }
             }
