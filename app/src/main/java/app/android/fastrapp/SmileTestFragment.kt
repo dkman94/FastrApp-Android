@@ -63,7 +63,6 @@ class SmileTestFragment : Fragment() {
                 viewFinder.post { startCamera() }
             } else {
                 requestPermissions(REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
-                println("here")
             }
         }
 

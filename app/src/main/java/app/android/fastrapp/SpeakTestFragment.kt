@@ -25,7 +25,6 @@ class SpeakTestFragment : Fragment() {
     }
 
     private val REQ_CODE = 100
-    private val RESULT_OK = 200
     private val WER_THRESHOLD = 0.25
 
     override fun onCreateView(
