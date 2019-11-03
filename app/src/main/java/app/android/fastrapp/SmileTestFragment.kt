@@ -32,7 +32,7 @@ private val REQUIRED_PERMISSIONS =
         Manifest.permission.WRITE_EXTERNAL_STORAGE,
         Manifest.permission.RECORD_AUDIO,
         Manifest.permission.READ_EXTERNAL_STORAGE,
-        Manifest.permission.CAMERA,
+        Manifest.permission.SEND_SMS
         Manifest.permission.CALL_PHONE)
 
 private val MIN_DROOPY_MOUTH_THRESHOLD_DIFF = 0.16
