@@ -188,7 +188,7 @@ class SmileTestFragment : Fragment() {
         }.build()
         val image = FirebaseVisionImage.fromFilePath(context!!, file.toUri())
         val detector = FirebaseVision.getInstance().getVisionFaceDetector(options)
-        val result = detector.detectInImage(image)
+        detector.detectInImage(image)
             .addOnSuccessListener {
                 println("analyzed image")
                 testResult.visibility = View.VISIBLE
@@ -201,6 +201,8 @@ class SmileTestFragment : Fragment() {
                         testResult.setText(R.string.droop_test_fail)
                         testResult.setBackgroundColor(context!!.resources.getColor(R.color.failedTestAlert))
                         helper.UpdateActivity(UserPrefsHelper.TestType.FACE, true)
+                        val emergencyServicesAlert = CallEmergencyServicesAlert()
+                        emergencyServicesAlert.show(fragmentManager!!, "emergencyAlert")
                         rightChevron.visibility = View.INVISIBLE
                     } else {
                         testResult.setText(R.string.droop_test_pass)

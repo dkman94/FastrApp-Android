@@ -12,7 +12,6 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.pwnetics.metric.WordSequenceAligner
@@ -90,6 +89,8 @@ class SpeakTestFragment : Fragment() {
             testResult.setText(R.string.speak_test_fail)
             testResult.setBackgroundColor(context!!.resources.getColor(R.color.failedTestAlert))
             helper.UpdateActivity(UserPrefsHelper.TestType.SPEECH, false)
+            val emergencyServicesAlert = CallEmergencyServicesAlert()
+            emergencyServicesAlert.show(fragmentManager!!, "emergencyAlert")
             rightChevron.visibility = View.INVISIBLE
         } else {
             testResult.setText(R.string.speak_test_pass)
