@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -19,6 +20,7 @@ import java.util.*
 
 class SpeakTestFragment : Fragment() {
     lateinit var helper: UserPrefsHelper
+    lateinit var testResult: TextView
 
     fun initialize(helper: UserPrefsHelper) {
         this.helper = helper
@@ -33,6 +35,7 @@ class SpeakTestFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.speak_test_page_fragment, container, false)
+        testResult = view.findViewById<TextView>(R.id.speak_test_result)
 
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
         intent.putExtra(
@@ -77,26 +80,41 @@ class SpeakTestFragment : Fragment() {
         return view
     }
 
+    private fun displayResult(speechErrorDetected: Boolean) {
+        testResult.visibility = View.VISIBLE
+        if (speechErrorDetected) {
+            testResult.setText(R.string.speak_test_fail)
+            testResult.setBackgroundColor(context!!.resources.getColor(R.color.failedTestAlert))
+        } else {
+            testResult.setText(R.string.speak_test_pass)
+            testResult.setBackgroundColor(context!!.resources.getColor(R.color.healthyTestAlert))
+        }
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             REQ_CODE -> {
                 if (data != null) {
                     val result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
-                    val test_case = getString(R.string.speech_test_case).split(" ").toTypedArray()
+                    val testCase = getString(R.string.speech_test_case).split(" ").toTypedArray()
+                    var speechErrorDetected = false
                     for (r in result) {
                         val wsa = WordSequenceAligner()
                         val arrayResult = r.split(" ").toTypedArray()
-                        val alignment = wsa.align(arrayResult, test_case)
+                        val alignment = wsa.align(arrayResult, testCase)
                         val wer = wsa.SummaryStatistics(listOf(alignment)).wordErrorRate
 
                         Log.d("alignment", alignment.toString())
                         Log.d("wer", wer.toString())
 
                         if (wer < WER_THRESHOLD) {
-                            // TODO
+                            speechErrorDetected = true
+                            break
                         }
                     }
+
+                    displayResult(speechErrorDetected)
                 }
             }
         }

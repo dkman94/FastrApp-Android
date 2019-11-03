@@ -49,4 +49,15 @@
         app:layout_constraintTop_toTopOf="@+id/speech_test"
         app:layout_constraintVertical_bias="0.708" />
 
+    <TextView
+        android:id="@+id/speak_test_result"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/defaultAlertColor"
+        android:gravity="center"
+        android:text="No results to display."
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
