@@ -14,10 +14,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import java.util.*
 
-
-//import sun.jvm.hotspot.utilities.IntArray
-
-
 class SpeakTestFragment : Fragment() {
     lateinit var helper: UserPrefsHelper
 
