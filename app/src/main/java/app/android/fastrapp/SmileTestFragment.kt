@@ -31,8 +31,10 @@ private val REQUIRED_PERMISSIONS =
         Manifest.permission.CAMERA,
         Manifest.permission.WRITE_EXTERNAL_STORAGE,
         Manifest.permission.RECORD_AUDIO,
-        Manifest.permission.READ_EXTERNAL_STORAGE
-    )
+        Manifest.permission.READ_EXTERNAL_STORAGE,
+        Manifest.permission.CAMERA,
+        Manifest.permission.CALL_PHONE)
+
 private val MIN_DROOPY_MOUTH_THRESHOLD_DIFF = 0.16
 
 class SmileTestFragment : Fragment() {
@@ -147,6 +149,8 @@ class SmileTestFragment : Fragment() {
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
                 "${System.currentTimeMillis()}_CameraXPlayground.jpg"
             )
+            testResult.setText(R.string.analyzing_face)
+            testResult.setBackgroundColor(context!!.resources.getColor(R.color.defaultAlertColor))
             imageCapture.takePicture(file,
                                      object : ImageCapture.OnImageSavedListener {
                                          override fun onError(
