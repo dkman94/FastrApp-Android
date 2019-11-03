@@ -68,4 +68,15 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent" />
 
+    <ImageView
+        android:id="@+id/right_chevron"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginRight="25dp"
+        android:src="@drawable/baseline_chevron_right_black_18dp"
+        android:visibility="visible"
+        android:layout_marginBottom="100dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
