@@ -68,17 +68,4 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent" />
 
-
-    <TextView
-        android:id="@+id/arm_test_result"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/defaultAlertColor"
-        android:gravity="center"
-        android:text="No results to display."
-        android:padding="5dp"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
