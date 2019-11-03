@@ -35,7 +35,7 @@
                 />
             <TextView
                 android:id="@+id/face_results_val"
-                android:text="NotTested"
+                android:text="Not Tested"
                 android:textColor="@color/defaultAlertColor"
                 android:layout_marginLeft="70dp"
                 android:gravity="center"
