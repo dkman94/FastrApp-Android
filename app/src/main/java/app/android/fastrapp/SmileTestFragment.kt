@@ -27,7 +27,7 @@ import kotlin.math.abs
 
 private const val REQUEST_CODE_PERMISSIONS = 10
 private val REQUIRED_PERMISSIONS =
-    arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CALL_PHONE)
 private val MIN_DROOPY_MOUTH_THRESHOLD_DIFF = 0.16
 
 class SmileTestFragment : Fragment() {
