@@ -87,14 +87,14 @@ class SpeakTestFragment : Fragment() {
         if (speechErrorDetected) {
             testResult.setText(R.string.speak_test_fail)
             testResult.setBackgroundColor(context!!.resources.getColor(R.color.failedTestAlert))
-            helper.UpdateActivity(UserPrefsHelper.TestType.SPEECH, false)
+            helper.UpdateActivity(UserPrefsHelper.TestType.SPEECH, true)
             val emergencyServicesAlert = CallEmergencyServicesAlert()
             emergencyServicesAlert.show(fragmentManager!!, "emergencyAlert")
             rightChevron.visibility = View.INVISIBLE
         } else {
             testResult.setText(R.string.speak_test_pass)
             testResult.setBackgroundColor(context!!.resources.getColor(R.color.healthyTestAlert))
-            helper.UpdateActivity(UserPrefsHelper.TestType.SPEECH, true)
+            helper.UpdateActivity(UserPrefsHelper.TestType.SPEECH, false)
             rightChevron.visibility = View.VISIBLE
         }
     }
