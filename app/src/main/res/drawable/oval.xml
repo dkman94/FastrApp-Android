@@ -11,7 +11,7 @@
                 android:topLeftRadius="30dp"
                 android:topRightRadius="30dp" />
 
-            <solid android:color="#CFCFCF" />
+            <solid android:color="@color/colorLightBlueDuolingo" />
 
             <padding
                 android:bottom="0dp"
