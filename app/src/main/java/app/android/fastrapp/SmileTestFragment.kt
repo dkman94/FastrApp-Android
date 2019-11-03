@@ -33,7 +33,7 @@ private val REQUIRED_PERMISSIONS =
         Manifest.permission.RECORD_AUDIO,
         Manifest.permission.READ_EXTERNAL_STORAGE,
         Manifest.permission.SEND_SMS
-        Manifest.permission.CALL_PHONE)
+    )
 
 private val MIN_DROOPY_MOUTH_THRESHOLD_DIFF = 0.16
 
@@ -60,10 +60,9 @@ class SmileTestFragment : Fragment() {
         testResult = view.findViewById<TextView>(R.id.droop_face_result)
         viewFinder.post {
             if (allPermissionsGranted()) {
-                viewFinder.post { startCamera() }
+                startCamera()
             } else {
                 requestPermissions(REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
-                println("here")
             }
         }
 
