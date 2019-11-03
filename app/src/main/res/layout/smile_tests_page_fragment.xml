@@ -6,13 +6,24 @@
 
     <Button
         android:id="@+id/take_picture_button"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="70dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/rounded_button"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view_finder" />
+
+    <ImageView
+        android:id="@+id/right_chevron"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginRight="25dp"
+        android:src="@drawable/baseline_chevron_right_black_18dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/take_picture_button"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/take_picture_button" />
 
     <TextView
         android:id="@+id/droop_face_result"
@@ -20,18 +31,18 @@
         android:layout_height="50dp"
         android:background="@color/defaultAlertColor"
         android:gravity="center"
-        android:text="Center your in the view finder and tap the blue button."
+        android:text="Center your face in the view finder and tap the blue button."
         android:textColor="#FFFFFF"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <TextureView
         android:id="@+id/view_finder"
-        android:layout_width="300dp"
-        android:layout_height="390dp"
-        android:layout_marginTop="50dp"
+        android:layout_width="410dp"
+        android:layout_height="533dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
