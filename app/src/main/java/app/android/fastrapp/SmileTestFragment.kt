@@ -197,11 +197,11 @@ class SmileTestFragment : Fragment() {
                     if (detectedFaceDroop) {
                         testResult.setText(R.string.droop_test_fail)
                         testResult.setBackgroundColor(context!!.resources.getColor(R.color.failedTestAlert))
-                        helper.UpdateActivity(UserPrefsHelper.TestType.FACE, false)
+                        helper.UpdateActivity(UserPrefsHelper.TestType.FACE, true)
                     } else {
                         testResult.setText(R.string.droop_test_pass)
                         testResult.setBackgroundColor(context!!.resources.getColor(R.color.healthyTestAlert))
-                        helper.UpdateActivity(UserPrefsHelper.TestType.FACE, true)
+                        helper.UpdateActivity(UserPrefsHelper.TestType.FACE, false)
                         rightChevron.visibility = View.VISIBLE
                     }
                 }
