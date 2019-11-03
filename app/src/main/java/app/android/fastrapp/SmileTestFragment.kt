@@ -47,7 +47,7 @@ class SmileTestFragment : Fragment() {
     lateinit var rightChevron: ImageView
     var viewFinderWidth = 0
     var viewFinderHeight = 0
-    lateinit var helper: UserPrefsHelper;
+    lateinit var helper: UserPrefsHelper
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -92,7 +92,6 @@ class SmileTestFragment : Fragment() {
             setLensFacing(CameraX.LensFacing.FRONT)
         }.build()
         val imageCapture = setupImageCapture()
-
 
         // Build the viewfinder use case
         val preview = Preview(previewConfig)
@@ -156,25 +155,24 @@ class SmileTestFragment : Fragment() {
             )
             testResult.setText(R.string.analyzing_face)
             testResult.setBackgroundColor(context!!.resources.getColor(R.color.defaultAlertColor))
-            imageCapture.takePicture(file,
-                                     object : ImageCapture.OnImageSavedListener {
-                                         override fun onError(
-                                             imageCaptureError: ImageCapture.ImageCaptureError,
-                                             message: String,
-                                             cause: Throwable?
-                                         ) {
-                                             val msg = "Photo capture failed: $message"
-                                             Log.e("CameraXApp", msg)
-                                         }
+            imageCapture.takePicture(file, object : ImageCapture.OnImageSavedListener {
+                override fun onError(
+                    imageCaptureError: ImageCapture.ImageCaptureError,
+                    message: String,
+                    cause: Throwable?
+                ) {
+                    val msg = "Photo capture failed: $message"
+                    Log.e("CameraXApp", msg)
+                }
 
-                                         // If the image capture is successful
-                                         override fun onImageSaved(file: File) {
-                                             val msg =
-                                                 "Photo capture succeeded: ${file.absolutePath}"
-                                             Log.d("CameraXApp", msg)
-                                             getUserPictureAndAnalyze(file)
-                                         }
-                                     })
+                // If the image capture is successful
+                override fun onImageSaved(file: File) {
+                    val msg =
+                        "Photo capture succeeded: ${file.absolutePath}"
+                    Log.d("CameraXApp", msg)
+                    getUserPictureAndAnalyze(file)
+                }
+            })
         }
 
         return imageCapture
@@ -236,5 +234,4 @@ class SmileTestFragment : Fragment() {
             context!!, it
         ) == PackageManager.PERMISSION_GRANTED
     }
-
 }

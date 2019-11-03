@@ -25,5 +25,4 @@ class CallEmergencyServicesAlert : DialogFragment() {
         }
         return view
     }
-
 }

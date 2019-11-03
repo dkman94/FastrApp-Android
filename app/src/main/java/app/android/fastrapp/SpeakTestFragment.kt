@@ -17,7 +17,6 @@ import androidx.fragment.app.Fragment
 import com.pwnetics.metric.WordSequenceAligner
 import java.util.*
 
-
 class SpeakTestFragment : Fragment() {
     lateinit var helper: UserPrefsHelper
     lateinit var testResult: TextView
