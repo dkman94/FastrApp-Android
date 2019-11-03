@@ -5,4 +5,5 @@
     <color name="colorAccent">#D81B60</color>
     <color name="failedTestAlert">#D5E32A45</color>
     <color name="healthyTestAlert">#B036E32A</color>
+    <color name="defaultAlertColor">#94D8CE</color>
 </resources>
